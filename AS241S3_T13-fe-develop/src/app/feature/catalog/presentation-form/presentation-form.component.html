@@ -1,0 +1,40 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>{{ isEdit ? 'Editar Presentación' : 'Nueva Presentación' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <label>Nombre de Presentación</label>
+      <input type="text" formControlName="presentationName" />
+
+      <label>Descripción</label>
+      <input type="text" formControlName="description" />
+
+      <label>Código</label>
+      <input type="text" formControlName="code" />
+
+      <label>Precio en mesa</label>
+      <input type="number" formControlName="priceTable" />
+
+      <label>Precio para llevar</label>
+      <input type="number" formControlName="priceTakeaway" />
+
+      <label>Precio delivery</label>
+      <input type="number" formControlName="priceDelivery" />
+
+      <label>Costo unitario</label>
+      <input type="number" formControlName="unitCost" />
+
+      <label>
+        <input type="checkbox" formControlName="delivery" />
+        ¿Disponible para delivery?
+      </label>
+
+      <div class="actions">
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Guardando...' : 'Guardar' }}
+        </button>
+        <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

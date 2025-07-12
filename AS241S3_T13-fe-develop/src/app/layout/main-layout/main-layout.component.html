@@ -1,0 +1,6 @@
+<app-header (toggleSidebar)="toggleSidebar()"></app-header>
+<app-sidebar #sidebar></app-sidebar>
+
+<main class="main-content" [class.contraido]="sidebarContraido">
+  <router-outlet></router-outlet>
+</main>

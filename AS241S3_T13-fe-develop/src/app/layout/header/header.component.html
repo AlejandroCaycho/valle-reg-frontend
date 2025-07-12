@@ -1,0 +1,53 @@
+<header class="main-header">
+  <div class="logo-section">
+    <a routerLink="/usuarios" class="logo-link">
+      <img src="/icons/LogoFoodTrack.png" alt="Logo Campitos Chicken" class="logo" />
+      <span class="brand-name">Food Track</span>
+    </a>
+  </div>
+  <div class="icon-section">
+  <button (click)="onToggleSidebar()" class="hamburger-btn">
+    ☰
+  </button>
+    <a routerLink="/mesas">
+      <img src="/icons/mesaheader.png" alt="Mesa" class="icon1" />
+    </a>
+    <a routerLink="/pedidos">
+      <img src="/icons/pedidoheader.png" alt="Carrito de pedidos" class="icon2" />
+    </a>
+    <a (click)="mostrarSoporte = !mostrarSoporte">
+      <img src="/icons/soporteheader.png" alt="Soporte" class="icon3" />
+    </a>
+  </div>
+  <div class="user-section">
+    <img src="/icons/foto-cliente.jpg" alt="Usuario" class="avatar" />
+    <span class="username">Jenny Wilson</span>
+    <img src="/icons/salirlogin.png" alt="Salir" class="icon logout" (click)="logout()" />
+  </div>
+</header>
+<div class="soporte-box" *ngIf="mostrarSoporte">
+  <h3>¿Necesita Ayuda?</h3>
+  <p>Para cualquier consulta o asistencia técnica, póngase en contacto con nuestro equipo de soporte.</p>
+
+  <div class="soporte-persona">
+    <img src="/icons/carlos.png" alt="Kelmer" />
+    <div>
+      <strong>Carlos</strong><br />
+      +51 903 011 604
+    </div>
+    <a href="https://wa.me/51903011604" target="_blank">
+      <img src="/icons/whatsapp.png" alt="WhatsApp" class="whatsapp-icon" />
+    </a>
+  </div>
+
+  <div class="soporte-persona">
+    <img src="/icons/dario.png" alt="Cristian" />
+    <div>
+      <strong>Dario</strong><br />
+      +51 913 365 766
+    </div>
+    <a href="https://wa.me/51913365766" target="_blank">
+      <img src="/icons/whatsapp.png" alt="WhatsApp" class="whatsapp-icon" />
+    </a>
+  </div>
+</div>

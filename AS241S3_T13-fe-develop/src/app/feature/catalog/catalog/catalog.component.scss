@@ -1,0 +1,251 @@
+:host {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+/* 🟥 HEADER */
+.catalog-header {
+  width: 100%;
+
+  .section-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .section-card {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid transparent;
+
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      margin-top: 1rem;
+    }
+
+    span {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #333;
+      margin: 1rem 0;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    &.active {
+      border-color: #dc3545;
+      background-color: #ffecec;
+    }
+  }
+}
+
+/* 🟦 CUERPO */
+.catalog-body {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* 🟩 COLUMNAS */
+.columns-layout {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* 📦 PANEL GENERAL */
+.panel {
+  flex: 1;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #343a40;
+    }
+
+    .add-btn {
+      width: 32px;
+      height: 32px;
+      background: #dc3545;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.3s;
+      user-select: none;
+
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+  }
+}
+
+/* 🟨 CATEGORÍAS */
+.category-panel .category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.4rem;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+       background-color: #f3f3f3;
+    }
+
+    &.selected {
+      background-color: #f3f3f3;
+      color: #212529;
+      font-weight: 600;
+    }
+
+    .icons {
+      display: flex;
+      gap: 0.5rem;
+
+      img {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+/* 🟥 PRODUCTOS Y TABLAS EN GENERAL */
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+
+  th,
+  td {
+    padding: 0.6rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  th {
+    background-color: #f1f1f1;
+    font-weight: 600;
+    color: #444;
+  }
+
+  tr {
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+       background-color: #f3f3f3;
+    }
+
+    &.selected {
+       background-color: #f3f3f3;
+      color: #212529;
+
+      td {
+       background-color: #f3f3f3;
+      color: #212529;
+      font-weight: 600;
+      }
+    }
+
+    td:first-child {
+      text-align: left;
+    }
+
+    td:last-child {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      align-items: center;
+
+      img {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+/* 🟦 PRESENTACIONES */
+.presentation-panel .presentation-list {
+  padding: 0.5rem;
+
+  .presentation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem;
+    background: #f9f9f9;
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    .icons {
+      display: flex;
+      gap: 0.5rem;
+
+      img {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.empty-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.empty-message {
+  padding: 1rem;
+  color: #888;
+  display: table-cell !important;
+  text-align: center !important;
+}

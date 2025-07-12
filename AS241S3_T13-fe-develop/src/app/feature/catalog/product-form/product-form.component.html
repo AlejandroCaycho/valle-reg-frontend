@@ -1,0 +1,32 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>{{ isEdit ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <label>Nombre</label>
+      <input formControlName="name" type="text" />
+
+      <label>Descripción</label>
+      <input formControlName="description" type="text" />
+
+      <label>Área</label>
+      <input formControlName="area" type="text" />
+
+      <label>Área secundaria</label>
+      <input formControlName="area2" type="text" />
+
+      <label>Área terciaria</label>
+      <input formControlName="area3" type="text" />
+
+      <label>
+        <input type="checkbox" formControlName="delivery" />
+        Delivery
+      </label>
+
+      <div class="actions">
+        <button type="submit" [disabled]="loading">{{ loading ? 'Guardando...' : 'Guardar' }}</button>
+        <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

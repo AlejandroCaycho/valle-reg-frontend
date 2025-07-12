@@ -1,0 +1,31 @@
+<div class="login-page">
+  <div class="login-left">
+    <img src="/icons/LogoFoodTrack.png" class="logo-foodtrack" />
+    <h1>FOOD TRACK SYSTEM</h1>
+    <p class="subtitle">Software gastronómico</p>
+    <img src="/logo/logo.png" class="mascota" />
+    <p class="descripcion">Moderniza tu restaurante sin complicaciones</p>
+    <p class="version">Versión: 1.0</p>
+  </div>
+  <div class="login-card">
+    <h3>ACCESO PERSONAL MOZO</h3>
+    <form>
+      <div class="input-group icon-input">
+        <img src="/icons/loginuser.png" class="input-icon" alt="Icono Usuario" />
+        <input #usernameInput type="text" placeholder="Usuario Mozo" />
+      </div>
+      <div class="input-group icon-input password">
+        <img src="/icons/logincontraseña.png" class="input-icon" alt="Icono Contraseña" />
+        <input #passwordInput type="password" placeholder="Contraseña Mozo" />
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+          <img #toggleIcon src="/icons/novisible.png" alt="Mostrar contraseña" />
+        </button>
+      </div>
+      <div class="button-group">
+        <button class="btn btn-mozo" type="button" (click)="login()">Ingresar</button>
+       <button class="btn btn-continuar" type="button" routerLink="/admin-login">Administrador</button>
+      </div>
+      <p class="footer">Food Track System</p>
+    </form>
+  </div>
+</div>

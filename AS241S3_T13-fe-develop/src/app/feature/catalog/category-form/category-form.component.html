@@ -1,0 +1,35 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>{{ isEdit ? 'Editar Categoría' : 'Nueva Categoría' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <label for="name">Nombre</label>
+      <input id="name" type="text" formControlName="name" />
+
+      <label for="description">Descripción</label>
+      <input id="description" type="text" formControlName="description" />
+
+      <label for="section">Sección</label>
+      <select id="section" formControlName="section">
+        <option value="Platos y Bebidas">Platos y Bebidas</option>
+        <option value="Combos">Combos</option>
+        <option value="Ofertas">Ofertas</option>
+      </select>
+
+      <label for="displayOrder">Orden de visualización</label>
+      <input id="displayOrder" type="number" formControlName="displayOrder" />
+
+      <label>
+        <input type="checkbox" formControlName="delivery" />
+        ¿Disponible para delivery?
+      </label>
+
+      <div class="actions">
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Guardando...' : 'Guardar' }}
+        </button>
+        <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,196 @@
+<main class="main-content">
+  <!-- Encabezado -->
+  <div class="titulo-users">
+    <h2>Tabla de Usuarios <span> <img src="icons/acercade.png" alt="" title="Administra usuarios: busca, filtra, ordena, genera reportes y realiza acciones como agregar, editar o inactivar."></span> </h2>
+    <button class="btn-primary btn-flotante" [routerLink]="'/form-user'" title="Agregar Usuario">
+      +
+    </button>
+  </div>
+
+  <!-- Breadcrumb o navegación -->
+  <div class="enlaces"><a href="">Panel</a> / <a href="">Usuarios</a></div>
+
+  <!-- Filtros, búsqueda y botones -->
+  <div class="report-search-container">
+    <div class="buscador-usuarios">
+      <input type="text" placeholder="Buscar usuarios por nombre" [(ngModel)]="filtroBusqueda"
+        (input)="filtrarUsuarios()" />
+    </div>
+
+    <div class="filtros-selects">
+      <select [(ngModel)]="filtroRol" (change)="filtrarUsuarios()">
+        <option value="">Todos los roles</option>
+        <option *ngFor="let rol of rolesDisponibles" [value]="rol">
+          {{ rol | titlecase }}
+        </option>
+      </select>
+
+      <select [(ngModel)]="filtroEstado" (change)="filtrarUsuarios()">
+        <option value="">Todos los estados</option>
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+    </div>
+
+    <div class="report-buttons">
+      <button class="btn btn-success" (click)="downloadActiveUsersReport()" title="Lista de Usuarios en PDF">
+        Reporte Activos
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="usuariosPagina.length === 0" class="no-data">
+    <p>No hay usuarios registrados.</p>
+  </div>
+
+  <div class="tabla-responsive" *ngIf="usuariosPagina.length > 0">
+    <table class="usuarios-table">
+      <thead>
+        <tr>
+          <th (click)="ordenarPor('documentNumber')" style="cursor: pointer">
+            <div class="th-content">
+              <span>Documento</span>
+              <span class="orden-simbolo">{{ getOrdenSimbolo('documentNumber') || '↑↓' }}</span>
+            </div>
+          </th>
+          <th (click)="ordenarPor('phone')" class="th-phone" style="cursor: pointer">
+            <div class="th-content">
+              <span class="label">Celular</span>
+              <span class="orden-simbolo">{{ getOrdenSimbolo('phone') || '↑↓' }}</span>
+            </div>
+          </th>
+
+          <th (click)="ordenarPor('name')" style="cursor: pointer">
+            <div class="th-content">
+              <span>Nombres</span>
+              <span class="orden-simbolo">{{ getOrdenSimbolo('name') || '↑↓' }}</span>
+            </div>
+          </th>
+          <th (click)="ordenarPor('surnames')" style="cursor: pointer">
+            <div class="th-content">
+              <span>Apellidos</span>
+              <span class="orden-simbolo">{{ getOrdenSimbolo('surnames') || '↑↓' }}</span>
+            </div>
+          </th>
+          <th (click)="ordenarPor('role')" style="cursor: pointer">
+            <div class="th-content">
+              <span>Cargo</span>
+              <span class="orden-simbolo">{{ getOrdenSimbolo('role') || '↑↓' }}</span>
+            </div>
+          </th>
+          <th (click)="ordenarPor('state')" style="cursor: pointer">
+            <div class="th-content">
+              <span>Estado</span>
+              <span class="orden-simbolo">{{ getOrdenSimbolo('state') || '↑↓' }}</span>
+            </div>
+          </th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let user of usuariosPagina">
+          <td>
+            <div class="celda-icono">
+              <img src="icons/controlar.png" alt="Tipo doc" />
+              <span>{{ user.documentType }}: {{ user.documentNumber }}</span>
+            </div>
+          </td>
+
+          <td class="td-phone">
+            <div class="celda-icono">
+              <img src="icons/telefono.png" alt="Nombre" />
+              <span>{{ user.phone}}</span>
+            </div>
+          </td>
+
+          <td>
+            <div class="celda-icono">
+              <img src="icons/nombrexd.png" alt="Nombre" />
+              <span>{{ user.name }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="celda-icono">
+              <img src="icons/correo.png" alt="Correo" />
+              <span>{{ user.surnames }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="celda-icono">
+              <span [ngClass]="{
+                  'rol-admin': user.role === 'admin',
+                  'rol-mozo': user.role === 'mozo',
+                  'rol-cajero': user.role === 'cajero'
+                }">
+                {{ user.role }}
+              </span>
+            </div>
+          </td>
+          <td>
+            <span [ngClass]="{
+                'estado-activo': user.state === true,
+                'estado-inactivo': user.state === false
+              }">
+              {{ user.state ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>
+            <button class="btneditar" [routerLink]="['/form-user']" [queryParams]="{ id: user.idUser }"
+              [disabled]="!user.state" title="Editar">
+              <img src="icons/edit.png" alt="Editar" />
+            </button>
+
+            <button class="btn-detalles" (click)="abrirModalDetalles(user)" title="Ver detalles">
+              <img src="icons/ojo.png" alt="Ver detalles" />
+            </button>
+
+            <button *ngIf="user.state" class="btneliminar" (click)="eliminarUsuario(user.idUser!)" title="Inactivar">
+              <img src="icons/delete.png" alt="Eliminar" />
+            </button>
+
+            <button *ngIf="!user.state" class="btnrestaurar" (click)="restaurarUsuario(user.idUser!)" title="Restaurar">
+              <img src="icons/restore.png" alt="Restaurar" />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="usuarios.length > 0" class="paginacion" [class.sidebar-contraido]="bodyContraido">
+    <button *ngFor="let page of totalPagesArray; let i = index" [class.activa]="i === currentPage"
+      (click)="changePage(i)">
+      {{ i + 1 }}
+    </button>
+  </div>
+
+
+
+<div class="modal-detalles" *ngIf="modalVisible && usuarioSeleccionado">
+  <div
+    class="modal-contenido"
+    #modalContainer
+    [ngStyle]="{
+      'background-image':
+        'url(' +
+        (usuarioSeleccionado.profilePhoto ? BACKEND_URL + usuarioSeleccionado.profilePhoto : DEFAULT_PHOTO) +
+        ')'
+    }"
+  >
+    <button class="cerrar" (click)="cerrarModal()">
+      <span aria-hidden="true">✖</span>
+    </button>
+
+    <div class="overlay-informacion">
+      <h3>{{ usuarioSeleccionado.name }} {{ usuarioSeleccionado.surnames }}</h3>
+      <p class="descripcion">CARGO: {{ usuarioSeleccionado.role | titlecase }}</p>
+        <span>DOCUMENTO: {{ usuarioSeleccionado.documentNumber }}</span>
+        <span>TELEFONO: {{ usuarioSeleccionado.phone }}</span>
+        <span>CORREO: {{ usuarioSeleccionado.email }}</span>
+    </div>
+  </div>
+</div>
+
+  
+</main>

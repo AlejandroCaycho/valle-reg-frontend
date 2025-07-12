@@ -1,0 +1,79 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>{{ isEdit ? 'Editar Insumo' : 'Nuevo Insumo' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <label>Nombre</label>
+      <input formControlName="name" type="text" />
+
+      <label>Código</label>
+      <input formControlName="code" type="text" />
+
+      <label>Categoría</label>
+      <input formControlName="category" type="text" />
+
+      <label>Unidad</label>
+      <input formControlName="unit" type="text" />
+
+      <label>Cantidad</label>
+      <input formControlName="quantity" type="number" />
+
+      <label>Stock mínimo</label>
+      <input formControlName="minStock" type="number" />
+
+      <label>Stock máximo</label>
+      <input formControlName="maxStock" type="number" />
+
+      <label>Ubicación</label>
+      <input formControlName="location" type="text" />
+
+      <label>Precio unitario</label>
+      <input formControlName="unitPrice" type="number" />
+
+      <label>Costo total</label>
+      <input formControlName="totalCost" type="number" />
+
+      <label>Proveedor</label>
+      <input formControlName="supplier" type="text" />
+
+      <label>Fecha de compra</label>
+      <input formControlName="lastPurchaseDate" type="date" />
+
+      <label>Fecha de vencimiento</label>
+      <input formControlName="expirationDate" type="date" />
+
+      <label>Fecha de producción</label>
+      <input formControlName="productionDate" type="date" />
+
+      <label>Lote</label>
+      <input formControlName="lotNumber" type="text" />
+
+      <label>
+        <input type="checkbox" formControlName="requiresRefrigeration" />
+        Requiere refrigeración
+      </label>
+
+      <label>Temperatura recomendada</label>
+      <input formControlName="recommendedTemperature" type="text" />
+
+      <label>
+        <input type="checkbox" formControlName="hasAllergens" />
+        Contiene alérgenos
+      </label>
+
+      <label>Tipo de alérgeno</label>
+      <input formControlName="allergenType" type="text" />
+
+      <label>Descripción</label>
+      <textarea formControlName="description"></textarea>
+
+      <label>Imagen (URL)</label>
+      <input formControlName="imageUrl" type="text" />
+
+      <div class="actions">
+        <button type="submit" [disabled]="loading">{{ loading ? 'Guardando...' : 'Guardar' }}</button>
+        <button type="button" class="cancel" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

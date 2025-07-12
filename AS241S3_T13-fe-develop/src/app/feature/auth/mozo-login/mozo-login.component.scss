@@ -1,0 +1,309 @@
+.login-page {
+  height: 100dvh;
+  width: 100%;
+  background: url('/icons/fondologin.png');
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-left {
+  width: 300px;
+  height: 500px;
+  background-color: #e60000;
+  border-radius: 30px;
+  padding: 30px 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.438);
+
+  .logo-foodtrack {
+    width: 70%;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .mascota {
+    width: 120px;
+    margin: 20px 0;
+  }
+
+  .descripcion {
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .version {
+    position: absolute;
+    bottom: 40px;
+    font-size: 11px;
+    text-align: center;
+  }
+}
+
+.login-card {
+  width: 450px;
+  height: 400px;
+  background: #fff4f4;
+  padding: 40px 30px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.277);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h3 {
+    text-align: center;
+    color: #e60000;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    .input-group {
+      width: 70%;
+      position: relative;
+
+      input {
+        width: 90%;
+        padding: 10px 0px 5px 32px;
+        border: none;
+        border-bottom: 2px solid #000000;
+        background: transparent;
+        font-size: 14px;
+        outline: none;
+        color: #000;
+      }
+
+      &.icon-input {
+        .input-icon {
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 20px;
+          height: 20px;
+          pointer-events: none;
+        }
+      }
+
+      &.password {
+        .toggle-password {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+
+          img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+      gap: 10px;
+
+      .btn {
+        flex: 1;
+        padding: 12px;
+        font-weight: bold;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &.btn-continuar {
+          background-color: #e60000;
+        }
+
+        &.btn-mozo {
+          background-color: #e60000;
+        }
+      }
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+    }
+  }
+}
+
+input::placeholder {
+  color: #7b7b7b;
+  font-size: 14px;
+}
+
+input:focus::placeholder {
+  color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .login-left {
+    display: none;
+  }
+
+  .login-page {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 24px 18px;
+
+    h3 {
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      gap: 20px;
+      padding: 10px; 
+        width: auto;
+      .input-group {
+        width: 80%;
+
+        input {
+          font-size: 14px;
+          padding: 10px 0 5px 32px;
+        }
+
+        &.icon-input .input-icon {
+          width: 18px;
+          height: 18px;
+          left: 8px;
+        }
+
+        &.password .toggle-password img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .button-group {
+        width: 80%;
+
+        .btn {
+          padding: 10px;
+          font-size: 14px;
+        }
+      }
+
+      .footer {
+        font-size: 11px;
+        margin-top: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 458px) {
+  .login-left {
+    display: none;
+  }
+
+  .login-page {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-card {
+    width: auto;
+    max-width: 230px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+
+    h3 {
+      font-size: 13px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    form {
+      padding: 0;
+      gap: 10px;
+      align-items: center;
+
+      .input-group {
+        width: 100%;
+        max-width: 200px;
+
+        input {
+          font-size: 11.5px;
+          padding: 6px 0 4px 24px;
+        }
+
+        &.icon-input .input-icon {
+          width: 13px;
+          height: 13px;
+          left: 6px;
+        }
+
+        &.password .toggle-password img {
+          width: 13px;
+          height: 13px;
+        }
+      }
+
+      .button-group {
+        width: 100%;
+        max-width: 200px;
+        gap: 6px;
+
+        .btn {
+          font-size: 11.5px;
+          padding: 7px;
+          border-radius: 5px;
+        }
+      }
+
+      .footer {
+        font-size: 10px;
+        margin-top: 10px;
+        text-align: center;
+      }
+    }
+  }
+}
+

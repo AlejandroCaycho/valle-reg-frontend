@@ -1,0 +1,186 @@
+<div id="user-form-popover" class="popover-content">
+  <div class="popover-content__image-container">
+    <div class="popover-content_image-container">
+      <img [src]="photoPreview" alt="Foto de perfil" width="120" height="120" class="rounded" />
+    </div>
+    <label for="photo" class="btn-foto" [class.disabled]="form.disabled"
+      [style.cursor]="form.disabled ? 'not-allowed' : 'pointer'">Editar perfil</label>
+    <input type="file" id="photo" (change)="onFileChange($event)" accept="image/*" [disabled]="form.disabled"
+      style="display: none" />
+
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="user-form" autocomplete="off">
+    <!-- Tipo de documento -->
+    <div class="user-form__group">
+      <label for="documentType" class="user-form__label">Tipo de Documento</label>
+      <select id="documentType" class="user-form__input" formControlName="documentType"
+        (change)="onDocumentTypeChange()">
+        <option value="DNI">DNI</option>
+        <option value="CE">Carné de Extranjería</option>
+        <option value="PAS">Pasaporte</option>
+      </select>
+    </div>
+
+    <!-- Documento -->
+    <div class="user-form__group">
+      <label for="documentNumber" class="user-form__label">{{
+        labelDocumento
+        }}</label>
+      <div style="display: flex; gap: 8px; align-items: center">
+        <input id="documentNumber" class="user-form__input" type="text" [attr.maxlength]="maxLengthDocumento"
+          formControlName="documentNumber" [placeholder]="labelDocumento" autocomplete="off" />
+
+        <button type="button" class="btn-dni" (click)="searchByDni()" [disabled]="!dniSearchEnabled">
+          <img src="" alt="" />
+          Buscar DNI
+        </button>
+      </div>
+      <div class="error-message" *ngIf="
+          form.get('documentNumber')?.invalid &&
+          (form.get('documentNumber')?.touched ||
+            form.get('documentNumber')?.dirty)
+        ">
+        <small *ngIf="form.get('documentNumber')?.errors?.['required']">
+          El {{ labelDocumento }} es obligatorio.
+        </small>
+        <small *ngIf="form.get('documentNumber')?.errors?.['pattern']">
+          Formato inválido para {{ labelDocumento }}.
+        </small>
+      </div>
+    </div>
+
+    <!-- El resto de campos no se modifica -->
+    <!-- Nombre -->
+    <div class="user-form__group">
+      <label for="name" class="user-form__label">Nombres</label>
+      <input id="name" class="user-form__input" type="text" formControlName="name" placeholder="Nombre"
+        autocomplete="nope" />
+      <div class="error-message" *ngIf="
+          form.get('name')?.invalid &&
+          (form.get('name')?.touched || form.get('name')?.dirty)
+        ">
+        <small *ngIf="form.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
+        <small *ngIf="form.get('name')?.errors?.['pattern']">Solo se permiten letras.</small>
+      </div>
+    </div>
+
+    <!-- Apellidos -->
+    <div class="user-form__group">
+      <label for="surnames" class="user-form__label">Apellidos</label>
+      <input id="surnames" class="user-form__input" type="text" formControlName="surnames" placeholder="Apellidos"
+        autocomplete="nope" />
+      <div class="error-message" *ngIf="
+          form.get('surnames')?.invalid &&
+          (form.get('surnames')?.touched || form.get('surnames')?.dirty)
+        ">
+        <small *ngIf="form.get('surnames')?.errors?.['required']">Los apellidos son obligatorios.</small>
+        <small *ngIf="form.get('surnames')?.errors?.['pattern']">Solo se permiten letras.</small>
+      </div>
+    </div>
+
+    <!-- Género -->
+    <div class="user-form__group">
+      <label for="gender" class="user-form__label">Género</label>
+      <select id="gender" class="user-form__input" formControlName="gender" autocomplete="nope">
+        <option value="">Seleccione género</option>
+        <option value="M">Masculino ♂️</option>
+        <option value="F">Femenino ♀️</option>
+        <option value="O">Otro ⚧</option>
+      </select>
+      <div class="error-message" *ngIf="
+          form.get('gender')?.invalid &&
+          (form.get('gender')?.touched || form.get('gender')?.dirty)
+        ">
+        <small *ngIf="form.get('gender')?.errors?.['required']">El género es obligatorio.</small>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="user-form__group">
+      <label for="email" class="user-form__label">Correo electrónico</label>
+      <input id="email" class="user-form__input" type="email" formControlName="email" placeholder="Correo electrónico"
+        autocomplete="nope" />
+      <div class="error-message" *ngIf="
+          form.get('email')?.invalid &&
+          (form.get('email')?.touched || form.get('email')?.dirty)
+        ">
+        <small *ngIf="form.get('email')?.errors?.['required']">El correo electrónico es obligatorio.</small>
+        <small *ngIf="form.get('email')?.errors?.['email']">Ingresa un correo válido.</small>
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="user-form__group user-form__group--password">
+      <label for="password" class="user-form__label">Contraseña</label>
+      <div class="user-form__password-wrapper">
+        <input id="password" class="user-form__input" [type]="showPassword ? 'text' : 'password'"
+          formControlName="password" placeholder="Contraseña" autocomplete="new-password" />
+        <button type="button" class="user-form__toggle-password" (click)="togglePasswordVisibility()"
+          aria-label="Mostrar/Ocultar contraseña">
+          <img [src]="showPassword ? 'icons/visible.png' : 'icons/novisible.png'" alt="Toggle Password" width="23"
+            height="23" />
+        </button>
+      </div>
+      <div class="error-message" *ngIf="
+          form.get('password')?.invalid &&
+          (form.get('password')?.touched || form.get('password')?.dirty)
+        ">
+        <small *ngIf="form.get('password')?.errors?.['required']">La contraseña es obligatoria.</small>
+      </div>
+    </div>
+
+    <!-- Rol -->
+    <div class="user-form__group">
+      <label for="role" class="user-form__label">Rol</label>
+      <select id="role" class="user-form__input" formControlName="role" autocomplete="off">
+        <option value="">Elija un rol</option>
+        <option value="admin">admin</option>
+        <option value="mozo">mozo</option>
+        <option value="cajero">cajero</option>
+      </select>
+      <div class="error-message" *ngIf="
+          form.get('role')?.invalid &&
+          (form.get('role')?.touched || form.get('role')?.dirty)
+        ">
+        <small *ngIf="form.get('role')?.errors?.['required']">El rol es obligatorio.</small>
+      </div>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="user-form__group">
+      <label for="phone" class="user-form__label">Teléfono</label>
+      <input id="phone" class="user-form__input" type="text" formControlName="phone" placeholder="Teléfono"
+        autocomplete="nope" />
+      <div class="error-message" *ngIf="
+          form.get('phone')?.invalid &&
+          (form.get('phone')?.touched || form.get('phone')?.dirty)
+        ">
+        <small *ngIf="form.get('phone')?.errors?.['required']">El teléfono es obligatorio.</small>
+        <small *ngIf="form.get('phone')?.errors?.['pattern']">El teléfono debe tener 9 dígitos y comenzar con 9.</small>
+      </div>
+    </div>
+
+    <!-- Dirección -->
+    <div class="user-form__group user-form__group--fullwidth">
+      <label for="adress" class="user-form__label">Dirección</label>
+      <input id="adress" class="user-form__input" type="text" formControlName="adress" placeholder="Dirección"
+        autocomplete="nope" />
+      <div class="error-message" *ngIf="
+          form.get('adress')?.invalid &&
+          (form.get('adress')?.touched || form.get('adress')?.dirty)
+        ">
+        <small *ngIf="form.get('adress')?.errors?.['required']">La dirección es obligatoria.</small>
+      </div>
+    </div>
+    <!-- Acciones -->
+    <div class="user-form__actions">
+      <button type="submit" class="btn btn--primary" [disabled]="form.invalid">
+        Aceptar
+      </button>
+      <button type="button" class="btn btn--secondary" (click)="onCancel()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

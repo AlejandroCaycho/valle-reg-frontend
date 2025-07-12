@@ -1,0 +1,174 @@
+<!-- 🟥 Header con tarjetas de sección -->
+<header class="catalog-header">
+  <div class="section-container">
+    <div
+      *ngFor="let s of sections"
+      class="section-card"
+      [class.active]="selectedSection === s"
+      (click)="selectSection(s)">
+      <img [src]="getSectionImage(s)" alt="{{ s }}" />
+      <span>{{ s }}</span>
+    </div>
+  </div>
+</header>
+
+<!-- 🟦 Cuerpo principal -->
+<main class="catalog-body">
+
+  <!-- 🟨 INSUMOS -->
+  <div *ngIf="selectedSection === 'Insumos'" class="panel supply-panel">
+    <div class="panel-header">
+      <h3>Insumos</h3>
+      <div class="add-btn" (click)="handleAddSupply()">+</div>
+    </div>
+
+    <table class="simple-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Código</th>
+          <th>Categoría</th>
+          <th>Cantidad</th>
+          <th>Proveedor</th>
+          <th>Lote</th>
+          <th>F. Producción</th>
+          <th>F. Vencimiento</th>
+          <th>Precio Unitario</th>
+          <th class="right">Acciones</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="supplies.length > 0; else noSupplies">
+        <tr *ngFor="let s of supplies">
+          <td>{{ s.name }}</td>
+          <td>{{ s.code }}</td>
+          <td>{{ s.category }}</td>
+          <td>{{ s.quantity }} {{ s.unit }}</td>
+          <td>{{ s.supplier }}</td>
+          <td>{{ s.lotNumber }}</td>
+          <td>{{ s.productionDate }}</td>
+          <td>{{ s.expirationDate }}</td>
+          <td>S/ {{ s.unitPrice.toFixed(2) }}</td>
+          <td>
+            <img src="/icons/boton-editar.png" (click)="openModal('supply', s)" />
+            <img src="/icons/delete.png" (click)="deleteSupply(s)" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noSupplies>
+      <tbody>
+        <tr>
+          <td colspan="10" class="empty-message">
+            No hay insumos registrados. Usa el botón + para agregar uno.
+          </td>
+        </tr>
+      </tbody>
+    </ng-template>
+  </div>
+
+  <!-- 🟩 CATEGORÍAS / PRODUCTOS / PRESENTACIONES -->
+  <div *ngIf="selectedSection !== 'Insumos'" class="columns-layout">
+
+<!-- Categorías -->
+<div class="panel category-panel">
+  <div class="panel-header">
+    <h3>Categorías</h3>
+    <div class="add-btn" (click)="openModal('category')">+</div>
+  </div>
+  <ng-container *ngIf="categories.length > 0; else noCategories">
+    <div class="category-list">
+      <div
+        *ngFor="let cat of categories"
+        [class.selected]="cat === selectedCategory"
+        (click)="selectCategory(cat)">
+        {{ cat.name }}
+        <span class="icons" (click)="$event.stopPropagation()">
+          <img src="/icons/boton-editar.png" (click)="openModal('category', cat)" />
+          <img src="/icons/delete.png" (click)="deleteCategory(cat)" />
+        </span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noCategories>
+    <div class="empty-container">
+      <p class="empty-message">No hay categorías, debes agregar una.</p>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Productos -->
+<div class="panel product-panel">
+  <div class="panel-header">
+    <h3>Productos</h3>
+    <div class="add-btn" (click)="handleAddProduct()">+</div>
+  </div>
+  <ng-container *ngIf="selectedCategory; else noCategory">
+    <ng-container *ngIf="products.length > 0; else noProducts">
+      <table class="simple-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th class="right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let prod of products"
+            [class.selected]="prod === selectedProduct"
+            (click)="selectProduct(prod)">
+            <td>{{ prod.name }}</td>
+            <td (click)="$event.stopPropagation()">
+              <img src="/icons/boton-editar.png" (click)="openModal('product', prod)" />
+              <img src="/icons/delete.png" (click)="deleteProduct(prod)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </ng-container>
+  <ng-template #noCategory>
+    <div class="empty-container">
+      <p class="empty-message">Selecciona una categoría para ver sus productos.</p>
+    </div>
+  </ng-template>
+  <ng-template #noProducts>
+    <div class="empty-container">
+      <p class="empty-message">No hay productos en esta categoría.</p>
+    </div>
+  </ng-template>
+</div>
+
+
+    <!-- Presentaciones -->
+    <div class="panel presentation-panel">
+      <div class="panel-header">
+        <h3>
+          Presentaciones
+          <span *ngIf="selectedProduct">de {{ selectedProduct.name }}</span>
+        </h3>
+        <div class="add-btn" (click)="handleAddPresentation()">+</div>
+      </div>
+      <div *ngIf="selectedProduct; else noProduct" class="presentation-list">
+        <div *ngFor="let pres of presentations" class="presentation-item">
+          <span>{{ pres.code }} - {{ pres.presentationName }}</span>
+          <span>S/ {{ pres.priceTable.toFixed(2) }}</span>
+          <span class="icons">
+            <img src="/icons/boton-editar.png" (click)="openModal('presentation', pres)" />
+            <img src="/icons/delete.png" (click)="deletePresentation(pres)" />
+          </span>
+        </div>
+      </div>
+      <ng-template #noProduct>
+        <p class="empty-message">Selecciona un producto para ver sus presentaciones.</p>
+      </ng-template>
+    </div>
+
+  </div>
+</main>
+
+<!-- 🧩 Modales -->
+<app-category-form *ngIf="modalType === 'category'" [category]="modalData" (close)="closeModal()"></app-category-form>
+<app-product-form *ngIf="modalType === 'product'" [product]="modalData" [category]="selectedCategory!" (close)="closeModal()"></app-product-form>
+<app-presentation-form *ngIf="modalType === 'presentation'" [presentation]="modalData" [product]="selectedProduct!" (close)="closeModal()"></app-presentation-form>
+<app-supply-form *ngIf="modalType === 'supply'" [supply]="modalData" (close)="closeModal()"></app-supply-form>
